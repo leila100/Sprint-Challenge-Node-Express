@@ -95,7 +95,7 @@ router.put("/:id", async (req, res) => {
   } catch {
     res
       .status(500)
-      .json({ error: "The project information could not be modified." })
+      .json({ error: "The action information could not be modified." })
   }
 })
 
