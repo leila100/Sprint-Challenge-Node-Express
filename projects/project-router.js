@@ -56,4 +56,30 @@ router.delete("/:id", async (req, res) => {
   }
 })
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    await projectsDB.get(id)
+    const projectInfo = req.body
+    if (!projectInfo.name || !projectInfo.description) {
+      res.status(400).json({
+        errorMessage: "Please provide project name and description."
+      })
+    } else {
+      const updatedProject = await projectsDB.update(id, projectInfo)
+      if (updatedProject) {
+        res.status(200).json(updatedProject)
+      } else {
+        res.status(404).json({
+          message: "The project with the specified ID does not exist."
+        })
+      }
+    }
+  } catch {
+    res
+      .status(500)
+      .json({ error: "The project information could not be modified." })
+  }
+})
+
 module.exports = router
