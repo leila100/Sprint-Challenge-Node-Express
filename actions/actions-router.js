@@ -16,4 +16,16 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const action = await actionsDB.get(id) // Throws an error if no action
+    res.status(200).json(action)
+  } catch {
+    res
+      .status(500)
+      .json({ error: "The action information could not be retrieved." })
+  }
+})
+
 module.exports = router
