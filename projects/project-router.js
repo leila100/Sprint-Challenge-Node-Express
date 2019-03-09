@@ -50,7 +50,7 @@ router.delete("/:id", async (req, res) => {
   try {
     await projectsDB.get(id) //Checking to be sure the project exist. If it doesn't, the database throws an error
     await projectsDB.remove(id)
-    res.status(200)
+    res.status(200).json({ message: "Project deleted" })
   } catch {
     res.status(500).json({ error: "The project could not be removed" })
   }

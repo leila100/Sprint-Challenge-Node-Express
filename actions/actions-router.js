@@ -56,4 +56,15 @@ router.post("/", async (req, res) => {
   }
 })
 
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    await actionsDB.get(id) //Checking to be sure the action exist. If it doesn't, the database throws an error
+    await actionsDB.remove(id)
+    res.status(200).json({ message: "Action deleted" })
+  } catch {
+    res.status(500).json({ error: "The action could not be removed" })
+  }
+})
+
 module.exports = router
