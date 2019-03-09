@@ -82,4 +82,18 @@ router.put("/:id", async (req, res) => {
   }
 })
 
+router.get("/:id/actions", async (req, res) => {
+  const { id } = req.params
+  try {
+    const actions = await projectsDB.getProjectActions(id) // Throws an error if no project
+    res.status(200).json(actions)
+  } catch {
+    res
+      .status(500)
+      .json({
+        error: "The actions information for the project could not be retrieved."
+      })
+  }
+})
+
 module.exports = router
