@@ -27,4 +27,22 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+router.post("/", async (req, res) => {
+  const project = req.body
+  if (!project.name || !project.description) {
+    res
+      .status(400)
+      .json({ errorMessage: "Please provide project name and description." })
+  } else {
+    try {
+      const newProject = await projectsDB.insert(project)
+      res.status(201).json(newProject)
+    } catch {
+      res.status(500).json({
+        error: "There was an error while saving the project to the database"
+      })
+    }
+  }
+})
+
 module.exports = router
