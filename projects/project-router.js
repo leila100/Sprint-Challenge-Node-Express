@@ -15,4 +15,16 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const project = await projectsDB.get(id) // Throws an error if no project
+    res.status(200).json(project)
+  } catch {
+    res
+      .status(500)
+      .json({ error: "The project information could not be retrieved." })
+  }
+})
+
 module.exports = router
