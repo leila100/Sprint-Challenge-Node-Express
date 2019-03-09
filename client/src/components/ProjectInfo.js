@@ -1,6 +1,8 @@
 import React from "react"
 import axios from "axios"
 
+import { ProjectsWrapper, InfoWrapper, Info } from "../styles/projectStyles"
+
 class ProjectInfo extends React.Component {
   constructor(props) {
     super(props)
@@ -22,19 +24,30 @@ class ProjectInfo extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>Name: {this.state.project.name}</div>
-        <div>Description: {this.state.project.description}</div>
-        <ul>
-          {this.state.project.actions &&
-            this.state.project.actions.map(action => (
-              <li key={action.id}>
-                <div>{action.description}</div>
-                <div>{action.notes}</div>
-              </li>
-            ))}
-        </ul>
-      </div>
+      <ProjectsWrapper>
+        <InfoWrapper>
+          <Info>
+            <span>Name: {this.state.project.name}</span>
+            <div>
+              <span>Description:</span>
+              <p> {this.state.project.description}</p>
+            </div>
+            <br />
+            <div>
+              <span>Notes:</span>
+            </div>
+            <ul>
+              {this.state.project.actions &&
+                this.state.project.actions.map(action => (
+                  <li key={action.id}>
+                    <div>{action.description}</div>
+                    <div>{action.notes}</div>
+                  </li>
+                ))}
+            </ul>
+          </Info>
+        </InfoWrapper>
+      </ProjectsWrapper>
     )
   }
 }
