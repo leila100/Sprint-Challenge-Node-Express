@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const projectsDB = require("./projectModel")
+const actionsDB = require("../actions/actionModel")
 
 router.use(express.json())
 
@@ -49,6 +50,12 @@ router.delete("/:id", async (req, res) => {
   const { id } = req.params
   try {
     await projectsDB.get(id) //Checking to be sure the project exist. If it doesn't, the database throws an error
+    const actions = await projectsDB.getProjectActions(id)
+    //Delete all actions associated with the project
+    console.log(actions)
+    actions.forEach(async action => {
+      await actionsDB.remove(action.id)
+    })
     await projectsDB.remove(id)
     res.status(200).json({ message: "Project deleted" })
   } catch {
@@ -88,11 +95,9 @@ router.get("/:id/actions", async (req, res) => {
     const actions = await projectsDB.getProjectActions(id) // Throws an error if no project
     res.status(200).json(actions)
   } catch {
-    res
-      .status(500)
-      .json({
-        error: "The actions information for the project could not be retrieved."
-      })
+    res.status(500).json({
+      error: "The actions information for the project could not be retrieved."
+    })
   }
 })
 
