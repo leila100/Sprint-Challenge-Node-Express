@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom"
 import axios from "axios"
 
 import ProjectsList from "./components/ProjectsList"
+import ProjectInfo from "./components/ProjectInfo"
 import Navbar from "./components/Navbar"
 
 class App extends Component {
@@ -27,7 +28,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
         <Switch>
           <Route
             exact
@@ -36,6 +37,7 @@ class App extends Component {
               <ProjectsList {...props} projects={this.state.projects} />
             )}
           />
+          <Route path="/projects/:id" component={ProjectInfo} />
         </Switch>
       </div>
     )
